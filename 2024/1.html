@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Q1</title>
+    <style> 
+        
+        /* 여기에 스타일을 작성하세요 */
+        .goalpost{
+            height:180px;
+            width: 320px;
+            border-top-style: solid;
+            border-top-width: 10px;
+            border-left-style:solid;
+            border-right-style: solid;
+        }
+
+        div img:hover{
+            border:none;
+            transform:translateX(-100px) translateY(-250px)rotate(2turn);
+        }
+
+        div.penlaty{
+            border-radius: 100%;
+            border-color: red;
+            border: 5px dashed;
+            z-index: 20;
+        }
+        
+        img{
+            position:fixed;
+            top:300px;
+            left:150px;
+            z-index: 10;
+            border-radius: 100%;
+            border-color: black;
+            border: 5px solid;
+            transition-delay: 0.5;
+            transition: 2s;
+        }
+
+        div.penalty {
+            position:fixed;
+            top:300px;
+            left:150px;
+            width: 50px;
+            height: 50px;
+            z-index: 1;
+        }
+
+
+    </style>
+
+
+</head>
+
+<body>   
+    <div class="goalpost"></div>      
+    <div class="penalty">
+            <img width="50px" height="50px" src="figs/ball.png">
+    </div>
+</html>

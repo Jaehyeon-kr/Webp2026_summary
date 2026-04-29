@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping list example</title>
+    <style>
+      li {
+        margin-bottom: 10px;
+      }
+
+      li button {
+        font-size: 12px;
+        margin-left: 20px;
+        color: #666;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>My shopping list</h1>
+
+    <div>
+      <p>Enter a new item:</p>
+      <input type="text" name="item" autocomplete="off" />
+      <button id="add">Add item</button>
+      <button id="removeAll">Remove all</button>
+    </div>
+
+    <ul></ul>
+
+    <script>
+      const list = document.querySelector("ul");
+      const input = document.querySelector("input");
+      const button = document.querySelector("#add");
+      const button2 = document.querySelector("#removeAll");
+
+      button.addEventListener("click", () => {
+        // 글자, 버튼, list item element 생성
+        const li = document.createElement("li");
+        const span = document.createElement("span");
+        const listBtn = document.createElement("button");
+
+        // list item에 글자와 버튼 추가
+        span.textContent = input.value;
+        listBtn.textContent = "Delete";
+        li.appendChild(span);
+        li.appendChild(listBtn);
+
+        // list에 list item 추가
+        list.appendChild(li);
+
+        // 각각의 Delete button을 눌렀을 때의 동작 (해당 항목 삭제)
+        listBtn.addEventListener("click", () => {
+          list.removeChild(li);
+        });
+
+        // 입력창 초기화 후 포커스 복귀
+        input.value = "";
+        input.focus();
+      });
+
+      button2.addEventListener("click", () => {
+        // 추가된 항목들을 다 찾아서 삭제
+        list.innerHTML = "";
+      });
+    </script>
+
+  </body>
+</html>

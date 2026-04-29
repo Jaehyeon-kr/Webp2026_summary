@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        div {
+            border:solid black 1px;
+            box-sizing:border-box;
+            width:500px;
+            height:500px;
+            background-color:beige;
+            position:absolute; /* 박스 배치를 위한 포지션 설정 */
+        }
+        div.left{ /* div.left 큰 박스를 위한 스타일 */
+            z-index:1; /* 명시적 z축 위치 설정 */
+        }
+        div.right{ /* div.right 큰 박스를 위한 스타일 */
+            top:200px;
+            left:300px;
+            z-index:2;  /* 명시적 z축 위치 설정 */
+        }
+        div.child {
+            width:250px;
+            height:250px;
+            background-color:skyblue;
+        }
+        div.one{ /* 작은 상자들의 위치 설정 */
+            top:50px;
+            left:50px;
+            z-index:1; /* 명시적 z축 위치 설정 */
+        }
+        div.two{
+            top:100px;
+            left:100px;
+            z-index:2; /* 명시적 z축 위치 설정 */
+        }
+        div.three{
+            top:150px;
+            left:150px;
+            z-index:3; /* 명시적 z축 위치 설정 */
+        }
+        div.four{
+            top:200px;
+            left:200px;
+            z-index:4; /* 명시적 z축 위치 설정 */
+        }
+        div:hover{ /* 모든 박스들의 hover 상태 시 설정 */
+            z-index: 999; /* z-축 최상단으로 배치 */
+        }
+        div.child:hover{ /* 작은 박스들의 hover 상태 시 설정 */
+            transform: rotate(-25deg); /* 좌측 25도 회전 */
+            transition: transform 2s; /* 2초간 회전 */
+        }
+
+        /* z-index의 값이 정확히 맞아야 할 필요는 없음
+           각 box간의 z-index의 상대적인 크기/순서만 맞으면 문제없음
+           hover 시 z-index 설정 값도 다른 박스들보다 큰 값이기만 하면 문제 없음
+         */
+    </style>
+</head>
+<body><!-- body 안의 영역은 수정 불가 -->
+    <div class="left">div.left
+        <div class="child one">child.one</div>
+        <div class="child two">child.two</div>
+        <div class="child three">child.three</div>
+    </div>
+    <div class="right">div.right
+        <div class="child one">child.one</div>
+        <div class="child two">child.two</div>
+        <div class="child three">child.three</div>
+        <div class="child four">child.four</div>
+    </div>
+</body>
+</html>

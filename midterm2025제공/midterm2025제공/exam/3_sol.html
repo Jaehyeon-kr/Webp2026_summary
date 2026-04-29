@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    /* 박스 이동의 거리와 시간은 눈으로 확인할 수 있는 정도면 문제없음 */
+
+    /* 글자와 박스 겹침 배치를 위한 태그 구성 및 스타일 구성은
+       다양한 방법이 있을 수 있으므로 실행 화면이 유사할 경우 모두 정답으로 인정 */
+
+    .wrapper {
+      position: relative;
+      width: 300px;
+      height: 80px;
+      margin: 10px 0;
+    }
+
+    .box {
+      position: absolute;
+      width: 200px;
+      height: 60px;
+      background-color: skyblue;
+      z-index: 1;
+      /* hover 시 오른쪽으로 이동하는 transition */
+      transition: transform 1s ease;
+    }
+
+    .wrapper:hover .box {
+      transform: translateX(250px);
+    }
+
+    .text {
+      position: absolute;
+      z-index: 2;
+      font-size: 1.2em;
+      top: 15px;
+      left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="box"></div>
+    <p class="text">루비짱~~~~~ (하이!)</p>
+  </div>
+  <div class="wrapper">
+    <div class="box"></div>
+    <p class="text">어떤 게 좋아?</p>
+  </div>
+  <div class="wrapper">
+    <div class="box"></div>
+    <p class="text">민트초코보다도 바.로.너!</p>
+  </div>
+</body>
+
+</html>

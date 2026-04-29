@@ -1,0 +1,52 @@
+/* CSS 파일은 수정 불가 */
+
+ul {
+    padding: 0px;
+    position:relative;
+
+}
+body {
+    width:800px;
+}
+ul li {
+    display: inline-block;
+    border: solid black 1px;
+    margin: 3px;
+    padding: 5px;    
+}
+
+#list {
+    border: black solid;
+    height: 300px;    
+    overflow:auto;
+}
+
+#list li {
+    border: 1px black solid;
+    display: block;
+    margin: 0px;
+    
+}
+
+#clear {
+    float:right;
+}
+
+#txt {
+    box-sizing: border-box;
+    width:100%;
+}
+
+.counter {
+          font-size: 4em;
+          text-align: center;
+          margin: 10px 0;
+          font-weight: bold;
+}
+
+.style-controller {
+    background: #f0f0f0;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+}

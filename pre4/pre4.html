@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="quiz.css" />
+    <script>
+      // 각 문제를 해결하기 위한 함수를 구현하시오
+      // 문제 1번을 해결하기 위한 함수의 이름: sol1()
+      // 문제 2번을 해결하기 위한 함수의 이름: sol2()
+      // ...
+
+      function sol1() {
+        let num1 = document.getElementById("num1").value;
+        let num2 = document.getElementById("num2").value;
+        var sum = Number(num1) + Number(num2);
+        document.getElementById("txt").value = sum;
+        return sum;
+        // 어떻게 더할까?
+      }
+
+      function sol2() {
+        let winner = 0;
+        let num1 = Number(document.getElementById("num1").value);
+        let num2 = Number(document.getElementById("num2").value);
+        // 어떻게 비교할까?
+        if(num1>num2){
+          winner = num1;
+        }else{
+          winner = num2;
+        }
+        document.getElementById("txt").value = winner;
+      }
+
+      function sol3() {
+
+        let lst = document.getElementById("txt").value.split(" ");
+        let str= {};
+        
+        
+        for(i of lst){
+          if (str[i] ==null){
+            str[i]=0;
+          } 
+          str[i] +=1;
+        }
+        
+        let answer = "";
+
+        for(i in str){
+          if (str[i] == 1){
+            answer += String(i) + " ";
+          }
+            console.log(i);
+        }
+        console.log(answer);
+        document.getElementById('answer').innerHTML = answer;  
+
+      }
+
+      function sol4() {
+        let count = Number(document.getElementById("num1").value);
+        let text = document.getElementById("txt").value;
+        let str = "";
+      
+        let p = document.createElement("p");
+
+        for (i = 0; i < count; i++) {
+      
+          p.innerHTML += text + "<br>";  
+          console.log(p.value);
+          // 어떻게 만들까?
+        } 
+          document.getElementById("answer").appendChild(p)
+        // div에 어떻게 붙일까?
+      }
+
+      function sol5() {
+        let inputs = document.getElementsByTagName("input");
+        for (i of inputs) {
+          if (i.style.visibility=="hidden")
+        {
+          i.style.visibility = "visible";
+        }else{
+          i.style.visibility ="hidden";
+        }
+          // css visibility 속성 값이 visible이면 hidden으로, 
+          // hidden이면 visible로 바꿔보세요
+        }
+      }
+
+      var buttonColor = 0; // 문제6을 위한 색상값 배열
+      var color = [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "navy",
+        "purple",
+      ];
+
+      function sol6() {
+        let arr = document.getElementsByTagName("li");
+        
+        for (i of arr){
+          i.style.color = color[buttonColor % 7]
+          
+        }
+        buttonColor +=1;
+        // 어떻게 구현할까?
+
+      }
+
+      function sol7() {
+        let notice = document.getElementById("notice");
+        if (!notice) { // 없으면...
+          let obj = document.createElement("div");
+          obj.id = "notice";
+          obj.style.border = "red double 3px";
+          obj.style.fontSize = "2em";
+          obj.style.height = "100px";
+          obj.style.width = "520px";
+          obj.style.backgroundColor = "beige";
+          obj.innerHTML = "<strong>Assignment #5</strong>";
+          
+          let div_parent = document.getElementsByTagName("body")[0]; //body는 배열형태를 반환하기때문에 0으로.
+          div_parent.insertBefore(obj, document.getElementsByTagName("p")[0]); //parentDiv.insertBefore(newNode, referenceNode)
+          
+          
+          // 어떻게 추가할까?
+
+        } else { 
+          let div_parent = document.getElementsByTagName("body")[0];
+          div_parent.removeChild(document.getElementById("notice")); //removeChild(chid) getElementById는 하나만 가져옴.
+          // 있으면..
+          // 어떻게 지울까?
+        }
+      }
+
+      function sol8() {
+        let div = document.getElementById("answer");
+        // 이미지를 어떻게 넣을까?
+        let img = document.createElement("img"); //img 태그 만듦.
+        img.src="./logo (1).png"
+
+
+        let num1 = document.getElementById("num1");
+        let num2 = document.getElementById("num2");
+        num1.value = img.width;// 이미지의 높이를 어떻게 가져올까?
+        num2.value = img.height;// 이미지의 너비를 어떻게 가져올까? 원래 이미지는 img.height, img.width로 가져온다.
+        console.log(num1.value);
+        console.log(num2.value);
+
+        let num1_tag = document.getElementById("num1");
+        let num2_tag = document.getElementById("num2");
+
+        num1_tag.value = num1.value;
+        num2_tag.innerHTML = num2.value;
+
+        
+        
+      }
+
+      var xAxis = 0;
+      var yAxis = 0;
+
+      function sol9() {
+        // 오프라인 과제로 해 보세요
+
+        let img = document.createElement("img");
+        img.src = "logo (1).png";
+        
+        let ans= document.getElementById("answer");
+        img.style.position="relative";
+        function keyProcess(event) {
+          switch (event.keyCode) {
+
+            case 40: //아래
+                yAxis+=1;
+                break;
+            case 37: 
+                xAxis-=1;
+                break;
+            case 39: 
+                xAxis+=1;
+                break;
+            case 38: 
+                yAxis-=1;
+                break;
+
+
+            // ... 방향키에 따라 xAxis와 yAxis를 어떻게 바꿀까?
+          }
+          // 어떻게 이미지를 움직일까?
+
+            img.style.left = xAxis + "px";
+            img.style.top  = yAxis + "px"; //함수를 초기화 할때마다(입력을 받을 때마다) 새로운 값을 갱신해야하기때문에 전역으로 설정된 xAxis, yAxis에 업데이트해준다.
+        }
+
+        ans.appendChild(img);
+        document.addEventListener("keydown", keyProcess);
+      }
+
+      
+    </script>
+  </head>
+
+  <body>
+    <p>
+      Number 1:
+      <input id="num1" type="number" />
+    </p>
+    <p>
+      Number 2:
+      <input id="num2" type="number" />
+    </p>
+    <p>
+      Text:
+      <input id="txt" type="text" />
+    </p>
+
+    <!-- 각 문제 풀이를 위한 버튼과 함수를 연결할 것 -->
+    <ul>
+      <!-- 1번 문제를 위한 버튼 -->
+      <li onclick="sol1()">#1</li>
+      <!-- 2번 문제를 위한 버튼 -->
+      <li onclick="sol2()">#2</li>
+      <!-- 3번 문제를 위한 버튼 -->
+      <li onclick="sol3()">#3</li>
+      <li onclick="sol4()">#4</li>
+      <li onclick="sol5()">#5</li>
+      <li onclick="sol6()">#6</li>
+      <li onclick="sol7()">#7</li>
+      <li onclick="sol8()">#8</li>
+      <li onclick="sol9()">#9</li>
+      <li onclick="sol10()">#10</li>
+      <li onclick="sol11()">#11</li>
+      <li onclick="sol12()">#12</li>
+    </ul>
+    <div id="answer"></div>
+  </body>
+</html>

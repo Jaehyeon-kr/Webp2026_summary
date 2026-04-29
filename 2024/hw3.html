@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script>
+      function quest0() {
+        // 여기에 스크립트를 작성하세요
+        var time;
+        time = prompt("초 단위 시간을 입력하세요");
+        var min = time / 60;
+        var sec = time % 60;
+        console.log(Math.floor(min) + " 분 " + sec + " 초입니다.");
+      }
+
+      function quest1() {
+        // 여기에 스크립트를 작성하세요
+        var x1, x2, y1, y2;
+        x1 = prompt("첫 번째 점의 x좌표를 입력하세요");
+        y1 = prompt("첫 번째 점의 y좌표를 입력하세요");
+        x2 = prompt("두 번째 점의 x좌표를 입력하세요");
+        y2 = prompt("두 번째 점의 y좌표를 입력하세요");
+
+        var p1 = [x1, y1];
+        var p2 = [x2, y2];
+
+        let distance = getDist(p1, p2); // 반드시 이 코드를 이용하세요
+        console.log(distance);
+      }
+
+      function getDist(p1, p2) {
+        // 입력 인자 설정 필요
+        // 여기에 스크립트를 작성하세요
+        Double_dist =
+          (p1[0] - p2[0]) * (p1[0] - p2[0]) + (p1[1] - p2[1]) * (p1[1] - p2[1]);
+        dist = Math.sqrt(Double_dist);
+        return dist;
+      }
+
+      function quest2(str) {
+        let string = str.toString();
+        let upperStr = "";
+        upperStr = str.toUpperCase().replace(/'/g, "");
+
+        return upperStr;
+      }
+
+      function quest3() {
+        // 여기에 스크립트를 작성하세요
+        var num1, oper, num2;
+        num1 = Number(prompt("첫 번째 숫자를 입력하세요"));
+        oper = prompt("연산자를 입력하세요");
+        num2 = Number(prompt("두 번째 숫자를 입력하세요"));
+        var answer = operate(num1, oper, num2); // 반드시 이 코드를 사용하세요
+        console.log("정답은 %d입니다.", answer);
+      }
+
+      function operate(num1, oper, num2) {
+        // 반드시 이 함수를 이용하여 연산 결과를 계산하세요
+        // 여기에 스크립트를 작성하세요
+        // 단, 반드시 switch 문을 활용하세요
+        var result;
+        switch (oper) {
+          case "+":
+            result = num1 + num2;
+            break;
+          case "-":
+            result = num1 - num2;
+            break;
+
+          case "/":
+            result = Math.floor(num1 / num2);
+            break;
+
+          case "*":
+            result = num1 * num2;
+            break;
+
+          case "%":
+            result = num1 % num2;
+            break;
+        }
+        return result;
+      }
+
+      function quest4() {
+        // 여기에 스크립트를 작성하세요
+        var human, computer, random;
+        human = prompt("가위 바위 보!");
+        random = Math.floor(Math.random() * 3) + 1;
+        if (1 <= random < 2) { 
+          computer = "가위";
+          console.log("컴퓨터: ", computer);
+        } else if (2 <= random < 3) {
+          computer = "바위";
+          console.log("컴퓨터: ", computer);
+        } else {
+          computer = "보";
+          console.log("컴퓨터: ", computer);
+        }
+
+        if (human == computer) {
+          console.log("비겼습니다");
+        } else if (human == "가위" && computer == "보") {
+          console.log("사용자 승리!");
+        } else if (human == "바위" && computer == "가위") {
+          console.log("사용자 승리!");
+        } else if (human == "보" && computer == "바위") {
+          console.log("사용자 승리!");
+        } else if (human == "가위" && computer == "바위") {
+          console.log("사용자 패배ㅠ");
+        } else if (human == "바위" && computer == "보") {
+          console.log("사용자 패배ㅠ");
+        } else if (human == "보" && computer == "가위") {
+          console.log("사용자 패배ㅠ");
+        }
+      }
+
+      function quest5() {
+        str = prompt("문자열을 입력하세요"); // 반드시 이 코드를 사용하세요
+        console.log(myReverse(str));
+      }
+
+      function myReverse(str) {
+        // 여기에 스크립트를 작성하세요
+        // 반드시 반복문을 이용하여 str의 내용을 뒤집으세요
+        var strlength, reversestr;
+        strlength = str.length;
+        reversestr = "";
+        for (i = 1; i < strlength + 1; i++) {
+          reversestr = reversestr + str[strlength - i];
+        }
+        return reversestr;
+      }
+
+      function quest6() {
+        // 여기에 스크립트를 작성하세요
+        var number;
+        number = prompt("숫자를 입력하세요:");
+        while (true) {
+          if (number > 0 && (number == 0 || number % 2 == 0)) {
+            number = prompt("숫자를 입력하세요:");
+          } else if (number > 0 && number % 2 == 1) {
+            console.log(number + "를 입력하셨네요.");
+            number = prompt("숫자를 입력하세요:");
+          } else if (number < 0) {
+            console.log("끝!");
+            break;
+          }
+        }
+      }
+
+      function quest7() {
+        // 여기에 스크립트를 작성하세요
+        var text, strsplit, strupper;
+        text = prompt("문자열을 입력해주세요.");
+        strsplit = text.split(" ");
+        strupper = "";
+        for (i = 0; i < strsplit.length; i++) {
+          strupper = strupper + strsplit[i][0].toUpperCase();
+        }
+        console.log(strupper);
+      }
+
+      let testStr =
+        "My name is mymy. Your name is youryour. His name is hishis. Her name is herher. So, my, your, his, her, name will be mymyyouryourhishisherehr.";
+      // 위 변수를 이용하여 quest8()함수를 실행하세요
+
+      function quest8(str) {
+        // 여기에 스크립트를 작성하세요
+        var strlist, array;
+        str = str.replace(/\,/g, "");
+        str = str.replace(/\./g, "");
+        strlist = str.split(" ");
+        array = [];
+        for (i = 0; i < strlist.length; i++) {
+          var found = false;
+          for (var j = 0; j < array.length; j++) {
+            if (strlist[i] === array[j]) {
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            array.push(strlist[i]);
+          }
+        }
+        array.sort();
+        for (i = 0; i < array.length; i++) {
+          console.log(array[i]);
+        }
+      }
+
+      let longStr =
+        "Computer engineering has been rapidly changed than any other academic disciplines; these changes are immediately reflected in the industrial field.";
+      // 위 변수를 이용하여 quest9()함수를 실행하세요
+
+      function quest9(str) {
+        // 여기에 스크립트를 작성하세요
+        var alphabet, cleanStr;
+        alphabet = {};
+        cleanStr = str.replace(/[\,\.\;\s]/g, "");
+        for (var i = 0; i < cleanStr.length; i++) {
+          var char = cleanStr[i];
+          if (alphabet[char]) {
+            alphabet[char]++;
+          } else {
+            alphabet[char] = 1;
+          }
+        }
+        for (var key in alphabet) {
+          console.log(key + ": " + alphabet[key]);
+        }
+      }
+    </script>
+  </head>
+
+  <body></body>
+</html>

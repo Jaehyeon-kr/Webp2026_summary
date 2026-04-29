@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+    <script>
+      // 숫자를 입력받아 콜라츠 추측에 의한 작업 횟수를 계산하고 반환하기 위한 함수를 구현하세요.
+
+      function collatzStep(){
+        let num,count;
+
+        num=prompt("2~100 사이의 숫자를 입력하세요");
+        count=0;
+        while(num!==1)
+        {
+        if (num%2==0){
+            num=num/2;
+        } else{
+            num=num*3+1;
+        }
+        count=count+1
+        }
+        console.log("총 "+count+" 회의 작업이 요구됨.");
+    }
+
+      // (1) 사용자로부터 2~100 사이의 수를 입력받기 위한 코드를 작성하세요
+     
+      // (2) collatzStep() 함수에 입력받은 수를 전달하여 필요한 작업 횟수를 계산하세요
+     
+      // (3) 총 몇회의 작업이 요구되는지 출력하세요
+     
+    </script>
+  </head>
+
+  <body></body>
+</html>

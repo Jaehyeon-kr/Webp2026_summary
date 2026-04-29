@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #a1 {
+            
+            list-style-type:square
+        }
+        #a2 {
+            list-style-type:upper-alpha;
+        }
+
+        #a3 :nth-last-of-type(2n+1){
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <ul id="a1">
+        <li>
+            서울시
+            <ol id="a2">
+                <li>
+                    노원구
+                    <ul id="a3">
+                        <li>상계동</li>
+                        <li>중계동</li>
+                        <li>하계동</li>
+                        <li>공릉동</li>
+                        <li>월계동</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+        <li>
+            서울시
+            <ol id="a2">
+                <li>
+                    강남구
+                    <ul id="a3">
+                        <li>논현동</li>
+                        <li>압구정동</li>
+                        <li>삼성동</li>
+                        <li>대치동</li>
+                        <li>역삼동</li>
+                    </ul>
+                </li>
+            </ol>
+        </li>
+    </ul>
+
+    
+</body>
+</html>

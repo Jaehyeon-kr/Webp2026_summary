@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Submission Table</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 10px 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+
+      /* 필요한 스타일을 추가하세요 */
+
+      /* rowspan 적용: 같은 날짜 행들 묶기 */
+      /* zebra stripe: 홀수 행 배경색 */
+      tbody tr:nth-child(odd) {
+        background-color: #e3efff;
+      }
+
+      /* 첫 번째 td (날짜 열): 흰색 배경 유지 */
+      tbody tr td:first-child {
+        background-color: white;
+      }
+
+      /* status 클래스별 색상 */
+      .status-complete {
+        color: gray;
+      }
+      .status-accepted {
+        color: green;
+        font-weight: bold;
+      }
+      .status-not-accepted {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 제시된 화면을 구성할 수 있도록 필요한 내용을 추가하세요 -->
+    <table>
+      <thead>
+        <tr>
+          <th>Submission Deadline</th>
+          <th>Status</th>
+          <th>Title</th>
+          <th>ID</th>
+          <th>Actions</th>
+          <th>Note</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2">Apr 11, 2025</td>
+          <td class="status-complete">complete</td>
+          <td>MyPaper 01</td>
+          <td>1052</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 01</td>
+        </tr>
+        <tr>
+          <td class="status-complete">complete</td>
+          <td>MyPaper 02</td>
+          <td>2257</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 01</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Apr 09, 2025</td>
+          <td class="status-complete">complete</td>
+          <td>MyPaper 03</td>
+          <td>2421</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 02</td>
+        </tr>
+        <tr>
+          <td class="status-complete">complete</td>
+          <td>MyPaper 04</td>
+          <td>3206</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 02</td>
+        </tr>
+        <tr>
+          <td rowspan="4">Jan 23, 2025</td>
+          <td class="status-accepted">accepted</td>
+          <td>MyPaper 05</td>
+          <td>4413</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 03</td>
+        </tr>
+        <tr>
+          <td class="status-not-accepted">not accepted</td>
+          <td>MyPaper 06</td>
+          <td>1596</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 03</td>
+        </tr>
+        <tr>
+          <td class="status-not-accepted">not accepted</td>
+          <td>MyPaper 07</td>
+          <td>9548</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 03</td>
+        </tr>
+        <tr>
+          <td class="status-not-accepted">not accepted</td>
+          <td>MyPaper 08</td>
+          <td>2279</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 03</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Dec 10, 2024</td>
+          <td class="status-accepted">Accepted</td>
+          <td>MyPaper 09</td>
+          <td>1224</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 04</td>
+        </tr>
+        <tr>
+          <td class="status-accepted">Accepted</td>
+          <td>MyPaper 10</td>
+          <td>9329</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 04</td>
+        </tr>
+        <tr>
+          <td rowspan="2">Oct 10, 2024</td>
+          <td class="status-accepted">accepted</td>
+          <td>MyPaper 11</td>
+          <td>8622</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 05</td>
+        </tr>
+        <tr>
+          <td class="status-complete">complete</td>
+          <td>MyPaper 12</td>
+          <td>2387</td>
+          <td><a href="#">See submission</a></td>
+          <td></td>
+          <td>Conference 05</td>
+        </tr>
+        <tr>
+          <td colspan="7" style="text-align:center; background-color:#f4f4f4;">
+            Summary: 12 papers submitted, 4 accepted, 4 not accepted, 4 complete
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

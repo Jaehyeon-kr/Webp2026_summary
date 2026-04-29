@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping list example</title>
+    <style>
+      li {
+        margin-bottom: 10px;
+      }
+
+      li button {
+        font-size: 12px;
+        margin-left: 20px;
+        color: #666;
+      }
+    </style>
+  </head>
+   
+
+  <body>
+    <h1>My shopping list</h1>
+     
+    <div>
+           
+      <p>Enter a new item:</p>
+      <input type="text" name="item" autocomplete="off" />      
+      <button id="add">Add item</button>            
+      <button id="removeAll">Remove all</button>    
+    </div>
+       
+    <ul></ul>
+     
+    <script>
+      const list = document.querySelector("ul");
+      const input = document.querySelector("input");
+      const button = document.querySelector("#add");
+      const button2 = document.querySelector("#removeAll");
+
+      button.addEventListener("click", () => {
+        
+        // 글자, 버튼, list item element 생성
+
+        // list item에 글자와 버튼 추가
+        // input 요소의 값을 획득하려면 value 속성 이용
+        // list에 list item 추가
+
+
+        listBtn.addEventListener("click", () => {
+          // 각각의 Delete button 을 눌렀을 때의 동작 (해당 항목 삭제)
+	      // listBtn은 버튼을 참조하는 녀석이겠죠?
+        });
+
+        input.focus();
+      });
+
+      button2.addEventListener("click", () => {
+        // 추가된 항목들을 다 찾아서 삭제
+      });
+      
+    </script>
+     
+  </body>
+</html>

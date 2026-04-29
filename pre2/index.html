@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+
+    console.log("");
+
+    function quest1(){
+        var a1 = prompt("첫 번째 점의 x좌표를 입력하세요");
+        var b1 = prompt("첫 번째 점의 y좌표를 입력하세요");
+        var a2 = prompt("두 번째 점의 x좌표를 입력하세요");
+        var b2 = prompt("두 번째 점의 y좌표를 입력하세요");
+
+        console.log(a1,b1,a1,b1);
+
+
+        function getDist(x1,y1,x2,y2){
+            console.log(x1);
+            var output = Math.sqrt((Math.pow(x1-x2, 2)) + Math.pow(y1-y2,2))
+            console.log(output);
+            return output;
+        }
+        console.log(getDist(a1,b1,a2,b2));
+
+    }
+
+
+    function quest2(str){
+
+        console.log(str.toUpperCase());
+
+    }
+
+
+    
+
+
+    function quest3(){
+
+        let temp = prompt("문자열을 입력하세요.") // abc
+
+
+        function myReverse(temp){
+            let str= "";
+            for(i of temp){
+                str = i + str;
+            }
+
+            return str;
+
+        }
+
+        console.log(myReverse(temp));
+        
+    }
+
+
+
+
+    function quest4(){
+
+        let temp = prompt("숫자를 입력하세요.").split(""); // abc
+
+        function myReverse(temp){
+            let  sum = 0;
+
+            temp.forEach(element => {
+                sum += Number(element);
+                
+            });
+            return sum;
+
+        }
+
+        console.log(myReverse(temp));
+        
+    }
+
+
+    function quest5(){
+
+        let temp = prompt("문자열을 입력하세요.").split(" "); // abc
+
+        function myReverse(temp){
+            let  sum = "";
+
+            temp.forEach(element => {
+                sum += element[0].toUpperCase();
+                
+            });
+            return sum;
+
+        }
+
+        console.log(myReverse(temp));
+        
+    }
+
+
+</script>
+<body>
+
+    <p> HI </p>
+    
+</body>
+</html>

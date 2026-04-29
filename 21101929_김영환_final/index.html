@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="final.css" />
+    <style>
+      #final-overlay {
+        position: fixed;         
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0; 
+        
+        /* 8번 문제를 해결하기 위한 추가적인 스타일을 적용하세요. */
+        background-color: hotpink;
+        z-index: 999;
+
+      }
+    </style>
+    <script>
+      window.onload = () => {
+        functions = [sol1, sol2, sol3, sol4, sol5, sol6];
+        let lis = document.querySelectorAll("ul li");
+        for (i = 0; i < functions.length; i++) {
+          lis[i].addEventListener("click", functions[i]);
+        }
+
+        const txtInput = document.getElementById("txt");
+        const txtLabel = document.getElementById("txtLabel");
+        const listElement = document.getElementById("list");
+        const ulElement = document.getElementById("buttons");
+
+        document.getElementById("clear").addEventListener("click", sol7);
+        document.getElementById("submit").addEventListener("click", sol8);
+
+        function sol1(event) {
+          // 1번 문제에 대한 답안을 작성하세요.
+          let txt = document.getElementById("txt").value;
+          let div = document.getElementById("list");
+          let rev = "";
+          for(let i = txt.length; i>0; i--){
+              rev += txt[i-1];
+          }
+          alert("Reversed: "+rev);
+        }
+      
+        function sol2(event) {
+          // 2번 문제에 대한 답안을 작성하세요.
+          let btts = document.getElementById("buttons");
+          let btts2 = btts;
+          let label = document.getElementById("txtLabel");
+          if(sol2.down != true){
+            btts.remove();
+            document.body.appendChild(btts2);
+            sol2.down = true;
+          }else{
+            btts.remove();
+            document.body.insertBefore(btts2,label);
+            sol2.down = false;
+          }
+        }
+        
+
+        function sol3(event) {
+         // 3번 문제에 대한 답안을 작성하세요.
+         let txtLabel = document.getElementById("txtLabel");
+         let txt = document.getElementById("txt");
+         let div = document.getElementById("list");
+         let tyt = document.createElement("div");
+         let mark = document.createElement("mark");
+         div.appendChild(tyt);
+         tyt.appendChild(mark);
+        if(sol3.now != true){
+          txtLabel.innerHTML = "Text (Tracking)";
+          tracking = setInterval(()=>{
+            mark.innerHTML = txt.value;
+          },1);
+          sol3.now = true;
+        }else{
+          txtLabel.innerHTML = "Text";
+          clearInterval(tracking);
+          sol3.now = false;
+        }
+        }
+
+        
+
+       
+        function sol4(event) {
+          // 4번 문제에 대한 답안을 작성하세요.
+          let submit = document.getElementById("submit");
+          if(submit.style.float != "right"){
+            submit.style.float = "right";            
+          }else{
+            submit.style.float = "none";
+          }
+        }
+
+        function sol5(event) {
+          const counterDiv = document.createElement("div");
+          counterDiv.textContent = "0";
+          counterDiv.className = "counter";
+          // 위 코드를 바탕으로 5번 문제를 해결할 수 있도록 코드를 완성하세요.
+          
+          if(Number(counterDiv.textContent) == "0"){
+            let div = document.getElementById("list");
+            div.appendChild(counterDiv);
+            timeUp = setInterval(()=>{
+            counterDiv.textContent = Number(counterDiv.textContent)+1;
+          },100);
+          setTimeout(()=>{
+            clearInterval(timeUp);
+          },3000);
+        }
+          }
+          
+
+        function sol6(event) {
+          const controller = document.createElement("div");
+          controller.className = "style-controller";
+          controller.innerHTML =
+            '<h3>컨트롤러</h3><label>폰트 크기: <input type="range" id="fontSizeSlider"></label>';
+          // 위 코드를 바탕으로 6번 문제를 해결할 수 있도록 코드를 완성하세요.     
+          document.body.appendChild(controller);     
+          let drag = document.getElementById("fontSizeSlider");
+          drag.min ="10";
+          drag.max ="50";
+          drag.value = "16";
+          let txt = document.getElementById("txt");
+          FontChange = setInterval(()=>{
+            txt.style.fontSize= drag.value +"px";
+          },1);
+        }
+
+
+        function sol7(event) {
+          // 7번 문제에 대한 답안을 작성하세요.
+          let div = document.getElementById("list");
+          div.innerHTML='';
+        }
+
+        function sol8(event) {
+          const whiteOverlay = document.getElementById("final-overlay");
+          // 위 코드를 바탕으로 8번 문제를 해결할 수 있도록 코드를 완성하세요.  
+          let rewhite = function () {
+            let y = 100;
+            reoverlay = setInterval(() => {
+              whiteOverlay.style.height = y + "%";
+              y = y - 1 / 12.5;
+            }, 1);
+            setTimeout(() => {
+              clearInterval(reoverlay);
+            }, 5000);
+            sol8.down = false;
+          }
+
+          if(sol8.down != true){
+            let x = 0;
+            overlay = setInterval(()=>{
+              x= x+1/12.5;
+              whiteOverlay.style.height = x+"%";
+            },1);
+            setTimeout(()=>{
+              clearInterval(overlay);
+            },5000);
+            sol8.down = true;
+          }
+          whiteOverlay.addEventListener("click",rewhite);
+        }
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id="final-overlay"></div>
+    <ul id="buttons">
+      <li id="0">01</li>
+      <li id="1">02</li>
+      <li id="2">03</li>
+      <li id="3">04</li>
+      <li id="4">05</li>
+      <li id="5">06</li>
+      <li id="submit">Submit</li>
+      <li id="clear">Clear</li>
+    </ul>
+    <label for="txt" id="txtLabel">Text</label>
+    <input type="text" id="txt" required />
+    <ul id="list"></ul>
+  </body>
+</html>

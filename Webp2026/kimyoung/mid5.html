@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box-wrapper {
+            position: relative;
+            width: 250px;
+            height: 100px;
+            margin: 10px;
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            background-color: red;
+            position: absolute;
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+
+        .content {
+            color: red;
+            z-index: 1;
+        }
+
+        .box-wrapper:hover .box {
+            transform: translateX(250px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="box-wrapper">
+    <div class="box"></div>
+    <p class="content">어떤 게 좋을까요?</p>
+</div>
+
+<div class="box-wrapper">
+    <div class="box"></div>
+    <p class="content">어떤 게 좋을까요?</p>
+</div>
+
+<div class="box-wrapper">
+    <div class="box"></div>
+    <p class="content">어떤 게 좋을까요?</p>
+</div>
+
+</body>
+</html>

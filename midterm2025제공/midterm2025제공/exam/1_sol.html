@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      /* 중첩 리스트 스타일링 솔루션 */
+
+      /* 최상위 ul: square 불릿 */
+      ul {
+        list-style-type: square;
+      }
+
+      /* ol (구): upper-alpha (A, B, C...) */
+      ol {
+        list-style-type: upper-alpha;
+      }
+
+      /* ol 안의 ul (동): disc */
+      ol ul {
+        list-style-type: disc;
+      }
+
+      /* ol > ul 안의 li 중 홀수 번째 항목: 빨간색 */
+      ol ul li:nth-last-of-type(2n+1) {
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- body 영역에는 추가/삭제/변경 불가     -->
+    <ul>
+      <li>서울시</li>
+      <ol>
+        <li>노원구</li>
+        <ul>
+          <li>상계동</li>
+          <li>중계동</li>
+          <li>하계동</li>
+          <li>공릉동</li>
+          <li>월계동</li>
+        </ul>
+      </ol>
+      <li>서울시</li>
+      <ol>
+        <li>강남구</li>
+        <ul>
+          <li>논현동</li>
+          <li>압구정동</li>
+          <li>삼성동</li>
+          <li>대치동</li>
+          <li>역삼동</li>
+        </ul>
+      </ol>
+    </ul>
+  </body>
+</html>
