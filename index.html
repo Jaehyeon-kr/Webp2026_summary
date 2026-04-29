@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>웹 프로그래밍 참고 자료</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Malgun Gothic", sans-serif;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── 사이드바 ── */
+    #sidebar {
+      width: 260px;
+      min-width: 260px;
+      background: #181825;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #313244;
+      overflow: hidden;
+    }
+
+    #sidebar-header {
+      padding: 14px 16px 10px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #89b4fa;
+      border-bottom: 1px solid #313244;
+      letter-spacing: 0.5px;
+    }
+
+    /* 탭 */
+    #tabs {
+      display: flex;
+      border-bottom: 1px solid #313244;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 8px 4px;
+      font-size: 11px;
+      text-align: center;
+      cursor: pointer;
+      color: #6c7086;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .tab:hover { color: #cdd6f4; }
+    .tab.active { color: #89b4fa; border-bottom-color: #89b4fa; }
+
+    /* 검색 */
+    #search-box {
+      padding: 8px 10px;
+      border-bottom: 1px solid #313244;
+    }
+
+    #search {
+      width: 100%;
+      padding: 5px 8px;
+      background: #313244;
+      border: 1px solid #45475a;
+      border-radius: 4px;
+      color: #cdd6f4;
+      font-size: 12px;
+      outline: none;
+    }
+
+    #search:focus { border-color: #89b4fa; }
+    #search::placeholder { color: #6c7086; }
+
+    /* 메뉴 목록 */
+    #menu {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 0;
+    }
+
+    #menu::-webkit-scrollbar { width: 4px; }
+    #menu::-webkit-scrollbar-track { background: transparent; }
+    #menu::-webkit-scrollbar-thumb { background: #45475a; border-radius: 2px; }
+
+    .menu-section {
+      display: none;
+    }
+    .menu-section.visible { display: block; }
+
+    .menu-group-label {
+      padding: 8px 14px 3px;
+      font-size: 10px;
+      color: #6c7086;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: bold;
+    }
+
+    .menu-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 5px 14px 5px 20px;
+      font-size: 12px;
+      color: #a6adc8;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .menu-btn:hover {
+      background: #313244;
+      color: #cdd6f4;
+    }
+
+    .menu-btn.active {
+      background: #1e3a5f;
+      color: #89b4fa;
+      border-left-color: #89b4fa;
+    }
+
+    /* ── 메인 콘텐츠 ── */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #content-header {
+      padding: 10px 20px;
+      background: #181825;
+      border-bottom: 1px solid #313244;
+      font-size: 13px;
+      color: #6c7086;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #content-header span { color: #89b4fa; font-weight: bold; }
+
+    #iframe-container {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── 빈 화면 ── */
+    #welcome {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: #45475a;
+    }
+
+    #welcome h2 { font-size: 20px; color: #585b70; }
+    #welcome p  { font-size: 13px; }
+
+    /* 빠른 접근 버튼 */
+    #quick-btns {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .quick-btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: 1px solid #45475a;
+      background: #313244;
+      color: #cdd6f4;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .quick-btn:hover, .quick-btn.active {
+      background: #1e3a5f;
+      border-color: #89b4fa;
+      color: #89b4fa;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 사이드바 -->
+<div id="sidebar">
+  <div id="sidebar-header">📚 웹 프로그래밍 참고자료</div>
+
+  <div id="tabs">
+    <button class="tab active" onclick="switchTab('html')">HTML/CSS</button>
+    <button class="tab" onclick="switchTab('js')">JS</button>
+    <button class="tab" onclick="switchTab('pattern')">패턴</button>
+    <button class="tab" onclick="switchTab('error')">에러</button>
+  </div>
+
+  <div id="search-box">
+    <input id="search" type="text" placeholder="섹션 검색..." oninput="filterMenu(this.value)">
+  </div>
+
+  <div id="menu">
+
+    <!-- HTML/CSS 탭 -->
+    <div class="menu-section visible" data-tab="html">
+      <div class="menu-group-label">HTML 태그</div>
+      <button class="menu-btn" onclick="go(this,'html.md','문서 구조')">문서 구조</button>
+      <button class="menu-btn" onclick="go(this,'html.md','텍스트 / 인라인 요소')">텍스트 / 인라인</button>
+      <button class="menu-btn" onclick="go(this,'html.md','목록')">목록 (ul/ol/li)</button>
+      <button class="menu-btn" onclick="go(this,'html.md','링크 / 미디어')">링크 / 미디어</button>
+      <button class="menu-btn" onclick="go(this,'html.md','테이블')">테이블</button>
+      <button class="menu-btn" onclick="go(this,'html.md','폼 (Form)')">폼 (Form)</button>
+      <button class="menu-btn" onclick="go(this,'html.md','input 태그')">input 태그</button>
+      <button class="menu-btn" onclick="go(this,'html.md','iframe')">iframe</button>
+      <button class="menu-btn" onclick="go(this,'html.md','레이아웃 / 컨테이너')">레이아웃 / 컨테이너</button>
+
+      <div class="menu-group-label">CSS</div>
+      <button class="menu-btn" onclick="go(this,'html.md','선택자 우선순위')">선택자 우선순위</button>
+      <button class="menu-btn" onclick="go(this,'html.md','색상 / 배경')">색상 / 배경</button>
+      <button class="menu-btn" onclick="go(this,'html.md','텍스트 스타일')">텍스트 스타일</button>
+      <button class="menu-btn" onclick="go(this,'html.md','박스 모델')">박스 모델</button>
+      <button class="menu-btn" onclick="go(this,'html.md','CSS 단위')">CSS 단위</button>
+      <button class="menu-btn" onclick="go(this,'html.md','display 속성')">display 속성</button>
+      <button class="menu-btn" onclick="go(this,'html.md','position 속성')">position 속성</button>
+      <button class="menu-btn" onclick="go(this,'html.md','z-index')">z-index</button>
+      <button class="menu-btn" onclick="go(this,'html.md','테이블 CSS')">테이블 CSS</button>
+      <button class="menu-btn" onclick="go(this,'html.md','선택자')">선택자 (nth-child 등)</button>
+      <button class="menu-btn" onclick="go(this,'html.md','애니메이션 / 트랜지션')">transform / transition</button>
+      <button class="menu-btn" onclick="go(this,'html.md','기타 CSS')">기타 CSS</button>
+      <button class="menu-btn" onclick="go(this,'html.md','인라인 스타일')">인라인 스타일</button>
+
+      <div class="menu-group-label">솔루션 해설</div>
+      <button class="menu-btn" onclick="go(this,'html.md','exam/0_sol')">exam/0 — HTML 공지사항</button>
+      <button class="menu-btn" onclick="go(this,'html.md','exam/1_sol')">exam/1 — 중첩 리스트 CSS</button>
+      <button class="menu-btn" onclick="go(this,'html.md','exam/2_sol')">exam/2 — 테이블 zebra</button>
+      <button class="menu-btn" onclick="go(this,'html.md','exam/3_sol')">exam/3 — 박스 hover 슬라이드</button>
+      <button class="menu-btn" onclick="go(this,'html.md','pre1/2_sol')">pre1/2 — 대각선 셀</button>
+      <button class="menu-btn" onclick="go(this,'html.md','pre1/3_sol')">pre1/3 — z-index hover 회전</button>
+      <button class="menu-btn" onclick="go(this,'html.md','mid2.html vs')">mid2 vs 1_sol 비교</button>
+      <button class="menu-btn" onclick="go(this,'html.md','mid4.html vs')">mid4 vs 2_sol 비교</button>
+      <button class="menu-btn" onclick="go(this,'html.md','mid5.html vs')">mid5 vs 3_sol 비교</button>
+      <button class="menu-btn" onclick="go(this,'html.md','2024/0.html')">2024/0 — 시간표</button>
+      <button class="menu-btn" onclick="go(this,'html.md','2024/1.html')">2024/1 — 골포스트 애니메이션</button>
+      <button class="menu-btn" onclick="go(this,'html.md','2024/2.html')">2024/2 — qmenu 레이아웃</button>
+      <button class="menu-btn" onclick="go(this,'html.md','pre3/pre3.html')">pre3 — 쇼핑 리스트 (해설)</button>
+      <button class="menu-btn" onclick="goFile(this,'pre3/pre3_sol.html')">pre3 — 솔루션 직접 열기</button>
+    </div>
+
+    <!-- JS 탭 -->
+    <div class="menu-section" data-tab="js">
+      <div class="menu-group-label">기본</div>
+      <button class="menu-btn" onclick="go(this,'js.md','변수 선언')">변수 선언 (var/let/const)</button>
+      <button class="menu-btn" onclick="go(this,'js.md','Falsy')">Falsy 값</button>
+      <button class="menu-btn" onclick="go(this,'js.md','객체 (Object)')">객체 (Object)</button>
+      <button class="menu-btn" onclick="go(this,'js.md','배열 (Array)')">배열 (Array)</button>
+      <button class="menu-btn" onclick="go(this,'js.md','함수 (Function)')">함수 (Function)</button>
+
+      <div class="menu-group-label">제어문</div>
+      <button class="menu-btn" onclick="go(this,'js.md','조건문')">조건문 (if/switch)</button>
+      <button class="menu-btn" onclick="go(this,'js.md','반복문')">반복문 (for/while)</button>
+
+      <div class="menu-group-label">DOM</div>
+      <button class="menu-btn" onclick="go(this,'js.md','DOM 요소 선택')">DOM 요소 선택</button>
+      <button class="menu-btn" onclick="go(this,'js.md','DOM 요소 내용')">DOM 내용/속성 조작</button>
+      <button class="menu-btn" onclick="go(this,'js.md','스타일 조작')">스타일 조작</button>
+      <button class="menu-btn" onclick="go(this,'js.md','DOM 요소 생성')">DOM 생성/추가/삭제</button>
+
+      <div class="menu-group-label">이벤트 / 타이머</div>
+      <button class="menu-btn" onclick="go(this,'js.md','이벤트')">이벤트</button>
+      <button class="menu-btn" onclick="go(this,'js.md','타이머')">타이머 (setInterval/setTimeout)</button>
+
+      <div class="menu-group-label">문자열 / 수학</div>
+      <button class="menu-btn" onclick="go(this,'js.md','문자열 메서드')">문자열 메서드</button>
+      <button class="menu-btn" onclick="go(this,'js.md','수학 / 형변환')">수학 / 형변환</button>
+      <button class="menu-btn" onclick="go(this,'js.md','입출력')">입출력 (prompt/alert)</button>
+
+      <div class="menu-group-label">패턴 예시</div>
+      <button class="menu-btn" onclick="go(this,'js.md','조건 / 토글')">토글 패턴</button>
+      <button class="menu-btn" onclick="go(this,'js.md','실시간 추적')">실시간 추적</button>
+      <button class="menu-btn" onclick="go(this,'js.md','전체 패턴 예시')">전체 패턴 예시</button>
+
+      <div class="menu-group-label">솔루션 해설</div>
+      <button class="menu-btn" onclick="go(this,'js.md','pre2 — JS 함수')">pre2 — JS 함수 기초</button>
+      <button class="menu-btn" onclick="go(this,'js.md','pre4 — JS DOM')">pre4 — JS DOM 9문제</button>
+      <button class="menu-btn" onclick="go(this,'js.md','calculateAverage')">2024/3 — 평균 3가지</button>
+      <button class="menu-btn" onclick="go(this,'js.md','콜라츠')">2024/4 — 콜라츠</button>
+      <button class="menu-btn" onclick="go(this,'js.md','팩토리얼')">2024/5 — 팩토리얼</button>
+      <button class="menu-btn" onclick="go(this,'js.md','quest0~9')">hw3 — quest0~9</button>
+    </div>
+
+    <!-- 패턴 탭 -->
+    <div class="menu-section" data-tab="pattern">
+      <div class="menu-group-label">★★★★★</div>
+      <button class="menu-btn" onclick="go(this,'pattern.md','toggle 패턴')">1. toggle 패턴</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','DOM 생성 → 설정 → 추가')">2. DOM 생성→설정→추가</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','transition + hover transform')">3. transition + hover</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','position: relative + absolute')">4. relative + absolute</button>
+
+      <div class="menu-group-label">★★★★</div>
+      <button class="menu-btn" onclick="go(this,'pattern.md','object {} 카운터')">5. object 빈도수 카운터</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','split → 처리 → 결과 누적')">6. split → 처리 누적</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','setInterval + setTimeout')">7. setInterval+setTimeout</button>
+
+      <div class="menu-group-label">★★★</div>
+      <button class="menu-btn" onclick="go(this,'pattern.md','while (true) + break')">8. while(true)+break</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','Math.random() 정수')">9. Math.random 정수</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','rowspan / colspan')">10. rowspan/colspan</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','nth-child / nth-of-type')">11. nth-child 선택자</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','누적 곱 / 누적 합')">12. 누적 곱/합</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','중복 제거 패턴')">13. 중복 제거</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','정규식 replace')">14. 정규식 replace</button>
+
+      <div class="menu-group-label">★★</div>
+      <button class="menu-btn" onclick="go(this,'pattern.md','keydown 방향키')">15. keydown 방향키</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','% 모듈로 순환')">16. % 모듈로 순환</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','클로저로 외부 변수')">17. 클로저 캡처</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','문자열 역순 패턴')">18. 문자열 역순</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','border-radius 원형')">19. border-radius 원형</button>
+      <button class="menu-btn" onclick="go(this,'pattern.md','3면만 border')">20. 3면 border</button>
+
+      <div class="menu-group-label">요약</div>
+      <button class="menu-btn" onclick="go(this,'pattern.md','패턴 빈도 요약')">전체 빈도 요약표</button>
+    </div>
+
+    <!-- 에러 탭 -->
+    <div class="menu-section" data-tab="error">
+      <div class="menu-group-label">JS 에러 ★★★★</div>
+      <button class="menu-btn" onclick="go(this,'error.md','E2.')">E2. prompt → 문자열 형변환</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E4.')">E4. head에서 DOM 접근</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E5.')">E5. innerHTML/textContent/value</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E7.')">E7. position 없으면 top 무효</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E8.')">E8. transition 위치 (★★★★★)</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E9.')">E9. absolute 기준 부모</button>
+
+      <div class="menu-group-label">JS 에러 ★★★</div>
+      <button class="menu-btn" onclick="go(this,'error.md','E1.')">E1. 비교 체이닝 항상 true</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E3.')">E3. var 없이 선언 → 전역</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E6.')">E6. == vs === 함정</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E10.')">E10. 누적 변수 지역 선언</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E11.')">E11. str+=ch 방향 주의</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E12.')">E12. textContent 숫자 연산</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E14.')">E14. rowspan 후 td 개수</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E15.')">E15. for...in vs for...of</button>
+
+      <div class="menu-group-label">JS 에러 ★★</div>
+      <button class="menu-btn" onclick="go(this,'error.md','E13.')">E13. 정규식 . 이스케이프</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E16.')">E16. img.width 로딩 전 0</button>
+      <button class="menu-btn" onclick="go(this,'error.md','E17.')">E17. style.float 예약어</button>
+
+      <div class="menu-group-label">CSS 에러</div>
+      <button class="menu-btn" onclick="go(this,'error.md','C1.')">C1. nth-child vs nth-of-type</button>
+      <button class="menu-btn" onclick="go(this,'error.md','C2.')">C2. nth-child(odd) vs nth-last</button>
+      <button class="menu-btn" onclick="go(this,'error.md','C3.')">C3. border-collapse 없으면 2겹</button>
+      <button class="menu-btn" onclick="go(this,'error.md','C4.')">C4. visibility vs display:none</button>
+      <button class="menu-btn" onclick="go(this,'error.md','C5.')">C5. inline에 width 무효</button>
+      <button class="menu-btn" onclick="go(this,'error.md','C6.')">C6. 후손 vs 자식 선택자</button>
+
+      <div class="menu-group-label">HTML 에러</div>
+      <button class="menu-btn" onclick="go(this,'error.md','H1.')">H1. label for = input id</button>
+      <button class="menu-btn" onclick="go(this,'error.md','H2.')">H2. radio 같은 name</button>
+      <button class="menu-btn" onclick="go(this,'error.md','H3.')">H3. target="_blank"</button>
+
+      <div class="menu-group-label">요약</div>
+      <button class="menu-btn" onclick="go(this,'error.md','에러 요약 테이블')">전체 에러 요약표</button>
+    </div>
+
+  </div><!-- /#menu -->
+</div><!-- /#sidebar -->
+
+<!-- 메인 -->
+<div id="main">
+  <div id="content-header">
+    <span id="header-file">—</span>
+    <span id="header-sep" style="display:none">›</span>
+    <span id="header-section"></span>
+  </div>
+
+  <div id="welcome">
+    <h2>왼쪽 버튼을 눌러 섹션으로 이동</h2>
+    <p>탭으로 파일 선택 · 검색창으로 필터링</p>
+    <div id="quick-btns">
+      <button class="quick-btn" onclick="go(this,'html.md','position 속성')">position</button>
+      <button class="quick-btn" onclick="go(this,'html.md','애니메이션 / 트랜지션')">transform</button>
+      <button class="quick-btn" onclick="go(this,'js.md','DOM 요소 선택')">DOM 선택</button>
+      <button class="quick-btn" onclick="go(this,'js.md','타이머')">타이머</button>
+      <button class="quick-btn" onclick="go(this,'pattern.md','toggle 패턴')">toggle</button>
+      <button class="quick-btn" onclick="go(this,'error.md','E8.')">E8 transition</button>
+    </div>
+  </div>
+
+  <div id="iframe-container" style="display:none">
+    <iframe id="viewer" src=""></iframe>
+  </div>
+</div>
+
+<script>
+  // md 파일의 헤딩을 anchor id로 변환하는 함수 (GitHub Flavored Markdown 규칙)
+  function toAnchor(text) {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s\uAC00-\uD7A3ㄱ-ㅎㅏ-ㅣ-]/g, '')  // 특수문자 제거 (한글 유지)
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-');
+  }
+
+  // 섹션 제목 → md 파일 내 헤딩 id 매핑 (직접 지정)
+  const anchorMap = {
+    // html.md
+    '문서 구조': 'section-doc',
+    '텍스트 / 인라인 요소': 'section-text',
+    '목록': 'section-list',
+    '링크 / 미디어': 'section-link',
+    '테이블': 'section-table',
+    '폼 (Form)': 'section-form',
+    'input 태그': 'section-input',
+    'iframe': 'section-iframe',
+    '레이아웃 / 컨테이너': 'section-layout',
+    '선택자 우선순위': 'section-specificity',
+    '색상 / 배경': 'section-color',
+    '텍스트 스타일': 'section-textstyle',
+    '박스 모델': 'section-boxmodel',
+    'CSS 단위': 'section-unit',
+    'display 속성': 'section-display',
+    'position 속성': 'section-position',
+    'z-index': 'section-zindex',
+    '테이블 CSS': 'section-tablecss',
+    '선택자': 'section-selector',
+    '애니메이션 / 트랜지션': 'section-animation',
+    '기타 CSS': 'section-misc',
+    '인라인 스타일': 'section-inline',
+  };
+
+  let currentFile = null;
+  let currentSection = null;
+
+  function go(btn, file, section) {
+    // 활성 버튼 표시
+    document.querySelectorAll('.menu-btn, .quick-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    currentFile = file;
+    currentSection = section;
+
+    // 헤더 업데이트
+    document.getElementById('header-file').textContent = file;
+    document.getElementById('header-sep').style.display = 'inline';
+    document.getElementById('header-section').textContent = section;
+
+    // welcome 숨기고 iframe 보이기
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('iframe-container').style.display = 'block';
+
+    // md 파일을 viewer.html에 로드 (anchor 포함)
+    const anchor = encodeURIComponent(section);
+    document.getElementById('viewer').src = `viewer.html?file=${file}&section=${anchor}`;
+  }
+
+  // html 파일 직접 iframe에 열기
+  function goFile(btn, file) {
+    document.querySelectorAll('.menu-btn, .quick-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    document.getElementById('header-file').textContent = file;
+    document.getElementById('header-sep').style.display = 'inline';
+    document.getElementById('header-section').textContent = '직접 실행';
+
+    document.getElementById('welcome').style.display = 'none';
+    document.getElementById('iframe-container').style.display = 'block';
+    document.getElementById('viewer').src = file;
+  }
+
+  // 탭 전환
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    document.querySelectorAll('.menu-section').forEach(s => {
+      s.classList.toggle('visible', s.dataset.tab === tab);
+    });
+
+    // 검색 초기화
+    document.getElementById('search').value = '';
+    filterMenu('');
+  }
+
+  // 메뉴 검색 필터
+  function filterMenu(query) {
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll('.menu-btn').forEach(btn => {
+      const match = !q || btn.textContent.toLowerCase().includes(q);
+      btn.style.display = match ? '' : 'none';
+    });
+    // 섹션 라벨: 하위 버튼이 하나라도 보이면 표시
+    document.querySelectorAll('.menu-group-label').forEach(label => {
+      let next = label.nextElementSibling;
+      let anyVisible = false;
+      while (next && !next.classList.contains('menu-group-label')) {
+        if (next.style.display !== 'none') anyVisible = true;
+        next = next.nextElementSibling;
+      }
+      label.style.display = anyVisible ? '' : 'none';
+    });
+  }
+</script>
+
+</body>
+</html>

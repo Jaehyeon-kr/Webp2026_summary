@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Viewer</title>
+  <!-- marked.js CDN (마크다운 파싱) -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- highlight.js (코드 하이라이팅) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-family: "Malgun Gothic", "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 28px 36px 60px;
+    }
+
+    /* 점프 알림 바 */
+    #jump-bar {
+      position: sticky;
+      top: 0;
+      background: #181825;
+      border-bottom: 1px solid #313244;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: #89b4fa;
+      display: none;
+      z-index: 100;
+      margin: -28px -36px 20px;
+    }
+
+    /* 헤딩 */
+    h1, h2, h3, h4 {
+      color: #89b4fa;
+      margin: 1.5em 0 0.5em;
+      scroll-margin-top: 40px;
+    }
+    h1 { font-size: 1.6em; border-bottom: 1px solid #313244; padding-bottom: 6px; }
+    h2 { font-size: 1.3em; border-bottom: 1px solid #2a2a40; padding-bottom: 4px; }
+    h3 { font-size: 1.1em; color: #a6e3a1; }
+    h4 { font-size: 1em; color: #f9e2af; }
+
+    /* 매칭된 섹션 강조 */
+    .matched-heading {
+      background: #2a2a1a;
+      border-left: 3px solid #f9e2af;
+      padding-left: 10px;
+      margin-left: -13px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* 단락 */
+    p { margin: 0.5em 0; }
+
+    /* 코드 블록 */
+    pre {
+      background: #11111b !important;
+      border: 1px solid #313244;
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+
+    code {
+      font-family: "Consolas", "D2Coding", monospace;
+      font-size: 13px;
+    }
+
+    /* 인라인 코드 */
+    p code, li code, td code {
+      background: #313244;
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #f38ba8;
+      font-size: 12.5px;
+    }
+
+    /* 테이블 */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 10px 0;
+      font-size: 13px;
+    }
+    th {
+      background: #313244;
+      color: #89b4fa;
+      padding: 7px 12px;
+      text-align: left;
+      border: 1px solid #45475a;
+    }
+    td {
+      padding: 6px 12px;
+      border: 1px solid #313244;
+    }
+    tr:nth-child(even) td { background: #1a1a2e; }
+    tr:hover td { background: #252538; }
+
+    /* 인용문 (> blockquote) */
+    blockquote {
+      border-left: 3px solid #89b4fa;
+      margin: 10px 0;
+      padding: 6px 14px;
+      background: #1a1a2e;
+      color: #a6adc8;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* 목록 */
+    ul, ol { padding-left: 22px; margin: 6px 0; }
+    li { margin: 2px 0; }
+
+    /* 구분선 */
+    hr {
+      border: none;
+      border-top: 1px solid #313244;
+      margin: 20px 0;
+    }
+
+    /* 굵게 */
+    strong { color: #f9e2af; }
+
+    /* 스크롤바 */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #45475a; border-radius: 3px; }
+
+    /* 로딩 */
+    #loading {
+      color: #6c7086;
+      padding: 40px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    /* 에러 */
+    #error-msg {
+      display: none;
+      color: #f38ba8;
+      padding: 20px;
+      background: #2a1a1a;
+      border-radius: 6px;
+      border: 1px solid #f38ba8;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="jump-bar">⚡ 섹션으로 이동: <span id="jump-label"></span></div>
+<div id="loading">로딩 중...</div>
+<div id="error-msg"></div>
+<div id="content"></div>
+
+<script>
+  // URL 파라미터 파싱
+  const params = new URLSearchParams(location.search);
+  const file    = params.get('file') || '';
+  const section = params.get('section') || '';
+
+  // marked 설정
+  marked.setOptions({
+    highlight: null,  // highlight.js 따로 처리
+    breaks: false,
+    gfm: true,
+  });
+
+  // highlight.js renderer
+  const renderer = new marked.Renderer();
+  renderer.code = function(token) {
+    // marked v9+: 인자가 객체 {text, lang, escaped}
+    const code = typeof token === 'object' ? token.text : token;
+    const lang = typeof token === 'object' ? (token.lang || '') : (arguments[1] || '');
+    let highlighted;
+    try {
+      highlighted = lang
+        ? hljs.highlight(code, { language: lang, ignoreIllegals: true }).value
+        : hljs.highlightAuto(code).value;
+    } catch(e) {
+      highlighted = code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+    return `<pre><code class="hljs language-${lang}">${highlighted}</code></pre>`;
+  };
+
+  // 헤딩에 id 부여 (섹션 점프용)
+  renderer.heading = function(token) {
+    // marked v9+: 인자가 객체 {text, depth, ...}
+    const text  = typeof token === 'object' ? token.text  : token;
+    const level = typeof token === 'object' ? token.depth : (arguments[1] || 1);
+    const id = 'h-' + text.replace(/<[^>]*>/g,'').replace(/[^\w\uAC00-\uD7A3ㄱ-ㅎㅏ-ㅣ\s-]/g,'').replace(/\s+/g,'-').toLowerCase();
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  };
+
+  marked.use({ renderer });
+
+  // md 파일 fetch → 렌더링 → 섹션 점프
+  if (!file) {
+    document.getElementById('loading').textContent = '파일이 지정되지 않았습니다.';
+  } else {
+    fetch(file)
+      .then(r => {
+        if (!r.ok) throw new Error(`파일을 불러올 수 없습니다: ${file}`);
+        return r.text();
+      })
+      .then(md => {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').innerHTML = marked.parse(md);
+
+        if (section) {
+          jumpToSection(section);
+        }
+      })
+      .catch(err => {
+        document.getElementById('loading').style.display = 'none';
+        const errEl = document.getElementById('error-msg');
+        errEl.style.display = 'block';
+        errEl.innerHTML = `${err.message}<br><br>
+          💡 <b>해결 방법</b>: VS Code에서 <b>Live Server</b> 확장 설치 후<br>
+          index.html 우클릭 → <b>"Open with Live Server"</b> 클릭<br>
+          (file:// 로는 fetch가 차단됩니다)`;
+      });
+  }
+
+  function jumpToSection(query) {
+    const q = decodeURIComponent(query).trim().toLowerCase();
+
+    // 모든 헤딩 요소 수집
+    const headings = document.querySelectorAll('h1, h2, h3, h4');
+    let target = null;
+
+    // 1. 텍스트 포함 검색 (부분 일치)
+    for (const h of headings) {
+      const text = h.textContent.trim().toLowerCase();
+      if (text.includes(q)) {
+        target = h;
+        break;
+      }
+    }
+
+    if (target) {
+      // 점프
+      target.scrollIntoView({ behavior: 'instant', block: 'start' });
+
+      // 강조 표시
+      target.classList.add('matched-heading');
+      setTimeout(() => target.classList.remove('matched-heading'), 3000);
+
+      // 점프 바 표시
+      const bar = document.getElementById('jump-bar');
+      document.getElementById('jump-label').textContent = target.textContent.trim();
+      bar.style.display = 'block';
+      setTimeout(() => bar.style.display = 'none', 4000);
+    }
+  }
+</script>
+</body>
+</html>
